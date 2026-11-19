@@ -1,0 +1,189 @@
+{
+  "run_mode": "full",
+  "source_commit": "2b484bfae45a1cf578f69d4f36d533bb04d3471a",
+  "model": "bert-base-uncased",
+  "tasks_order": [
+    "squad"
+  ],
+  "methods": [
+    "+CS"
+  ],
+  "seed": 3407,
+  "calibration_examples": 3000,
+  "sampled_tokens": 200,
+  "lambda": 5.0,
+  "delta": 0.001,
+  "target_relative_flops": 0.6,
+  "finetuning_data": "all rows in the target training split; 3000 calibration examples apply only to pruning",
+  "hyperparameters": {
+    "glue": {
+      "learning_rate": 2e-05,
+      "epochs": 3,
+      "batch_size": 32,
+      "max_length": 128
+    },
+    "squad": {
+      "learning_rate": 2e-05,
+      "epochs": 3,
+      "batch_size": 12,
+      "max_length": 384
+    }
+  },
+  "smoke_epochs": 1,
+  "table2_reference": {
+    "mrpc": {
+      "metric": "accuracy",
+      "bertbase": 86.27,
+      "random": 77.45,
+      "mc": 81.86,
+      "cs": 86.03
+    },
+    "stsb": {
+      "metric": "spearmanr",
+      "bertbase": 88.59,
+      "random": 85.82,
+      "mc": 86.7,
+      "cs": 88.12
+    },
+    "sst2": {
+      "metric": "accuracy",
+      "bertbase": 93.12,
+      "random": 90.83,
+      "mc": 91.74,
+      "cs": 92.32
+    },
+    "squad": {
+      "metric": "f1",
+      "bertbase": 88.48,
+      "random": 84.79,
+      "mc": 85.37,
+      "cs": 86.7
+    }
+  },
+  "results": [
+    {
+      "task": "squad",
+      "condition": "+CS",
+      "status": "complete",
+      "score_name": "f1",
+      "score": 8555.199922754897,
+      "raw_score": 85.55199922754896,
+      "metrics_percent": {
+        "f1": 8555.199922754897,
+        "exact_match": 7703.878902554399
+      },
+      "eval_metrics_raw": {
+        "eval_exact_match": 77.03878902554399,
+        "eval_f1": 85.55199922754896,
+        "eval_runtime": 108.7848,
+        "eval_samples_per_second": 99.131,
+        "eval_steps_per_second": 6.196,
+        "epoch": 3.0
+      },
+      "epochs": 3,
+      "learning_rate": 2e-05,
+      "batch_size": 12,
+      "seed": 3407,
+      "elapsed_seconds": 8041.394853714,
+      "paper_reference": 86.7
+    }
+  ],
+  "deviations": [
+    "Table 2 does not give unique task-specific GLUE learning rates or epoch counts; fixed LR 2e-5 and 3 epochs are used.",
+    "The published BERTBASE row is reported as a reference; the BERTBASE condition here is also fine-tuned from the unpruned model."
+  ],
+  "peak_gpu_memory_mib": 3383,
+  "repo_patches": {
+    "data": "map num_proc 64->4; pinned SQuAD source already has one validation example_id append, verified without modification",
+    "cluster": "squareform condensed distances; delta 0.001; random-centroid + correct member indexing for head centroid",
+    "finetune": "Transformers eval_strategy compatibility; torchvision VideoReader placeholder",
+    "collector": "bounded uniform 200-token activation capture"
+  },
+  "versions": {
+    "python": "3.13.16",
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.6",
+    "datasets": "4.4.0",
+    "evaluate": "0.4.6",
+    "scipy": "1.16.3"
+  },
+  "model_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+  "dataset_revisions": {
+    "nyu-mll/glue": "bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c",
+    "rajpurkar/squad": "7b6d24c440a36b6815f21b70d25016731768db1f"
+  },
+  "gpu": "Tesla T4",
+  "gpu_cuda_version": "13.0",
+  "table_rows": {
+    "squad": [
+      {
+        "task": "squad",
+        "condition": "+CS",
+        "status": "complete",
+        "score_name": "f1",
+        "score": 8555.199922754897,
+        "raw_score": 85.55199922754896,
+        "metrics_percent": {
+          "f1": 8555.199922754897,
+          "exact_match": 7703.878902554399
+        },
+        "eval_metrics_raw": {
+          "eval_exact_match": 77.03878902554399,
+          "eval_f1": 85.55199922754896,
+          "eval_runtime": 108.7848,
+          "eval_samples_per_second": 99.131,
+          "eval_steps_per_second": 6.196,
+          "epoch": 3.0
+        },
+        "epochs": 3,
+        "learning_rate": 2e-05,
+        "batch_size": 12,
+        "seed": 3407,
+        "elapsed_seconds": 8041.394853714,
+        "paper_reference": 86.7
+      }
+    ]
+  },
+  "summary": {
+    "run_mode": "full",
+    "tasks": [
+      "squad"
+    ],
+    "methods": [
+      "+CS"
+    ],
+    "results": {
+      "squad": [
+        {
+          "task": "squad",
+          "condition": "+CS",
+          "status": "complete",
+          "score_name": "f1",
+          "score": 8555.199922754897,
+          "raw_score": 85.55199922754896,
+          "metrics_percent": {
+            "f1": 8555.199922754897,
+            "exact_match": 7703.878902554399
+          },
+          "eval_metrics_raw": {
+            "eval_exact_match": 77.03878902554399,
+            "eval_f1": 85.55199922754896,
+            "eval_runtime": 108.7848,
+            "eval_samples_per_second": 99.131,
+            "eval_steps_per_second": 6.196,
+            "epoch": 3.0
+          },
+          "epochs": 3,
+          "learning_rate": 2e-05,
+          "batch_size": 12,
+          "seed": 3407,
+          "elapsed_seconds": 8041.394853714,
+          "paper_reference": 86.7
+        }
+      ]
+    },
+    "total_elapsed_seconds": 8372.299597907,
+    "peak_gpu_memory_mib": 3383
+  },
+  "elapsed_seconds": 8372.299597907
+}
