@@ -1,6 +1,7 @@
 from tqdm import tqdm
 import torch
 import scipy.cluster.hierarchy as sch
+from scipy.spatial.distance import squareform
 from src.utils.flops import flops_per_head, flops_per_neuron
 import numpy as np
 
@@ -46,7 +47,7 @@ def derive_head_tree(config, ATTN_O_input):
                     sim[head_idx1, head_idx2] = mean_cos
         dist = torch.ones(head_num, head_num) - sim
         distance = distance + (dist, )
-        tree = sch.linkage(dist, method='complete', metric='chebyshev')
+        tree = sch.linkage(squareform(dist.numpy(), checks=False), method='complete')
         trees = trees + (tree, )
     return distance, trees
 
@@ -64,7 +65,7 @@ def derive_neuron_tree(config, FFN_2_input):
             sim_dim = torch.nn.functional.cosine_similarity(neuron1.t(), neuron2.t())
             sim[dim_idx1, :] = sim_dim
         dist = torch.ones(d_ffn, d_ffn) - torch.abs(sim)
-        tree = sch.linkage(dist, method='complete', metric='chebyshev')
+        tree = sch.linkage(squareform(dist.numpy(), checks=False), method='complete')
         trees = trees + (tree, )
         distance = distance + (dist, )
     return distance, trees
