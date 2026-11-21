@@ -43,9 +43,9 @@ Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/t
 
 ## Thực nghiệm Figure 4: thời gian pruning trên MNLI
 
-![Accuracy theo thời gian pruning trên MNLI ở khoảng 60% FLOPs. So sánh Ours, KCM và Mask-Tuning giữa bài báo và Kaggle v15.](experiments/figure4/figure4_pruning_time_v15.png)
+![Accuracy theo thời gian pruning cho Ours, KCM và Mask-Tuning trên MNLI trong lần chạy Kaggle v15.](experiments/figure4/figure4_pruning_time_v15.png)
 
-Biểu đồ tái hiện ô bên trái của Figure 4 ở mức khoảng 60% FLOPs. Trục ngang biểu diễn thời gian pruning theo thang log và trục dọc biểu diễn accuracy MNLI matched. Trong lần chạy full v15 trên Tesla T4 với seed `3407`, Ours đạt **82,26% accuracy** sau **2,60 phút pruning** và giữ **59,62% FLOPs**. Điểm tương ứng đọc từ đồ thị của bài báo trên RTX 3090 là khoảng **82,65%** và **3,00 phút**. Các điểm KCM và Mask-Tuning cũng được hiển thị để đối chiếu. [Figure 4 của paper](https://aclanthology.org/2024.lrec-main.1162.pdf#page=7) · [Kết quả MNLI v15 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179)
+Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (thang log) ở mức khoảng 60% FLOPs. Lần chạy full v15 dùng Tesla T4 và seed `3407`. Ours đạt **82,26% accuracy** sau **2,60 phút pruning** và giữ **59,62% FLOPs**. [Kết quả MNLI v15 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179)
 
 ## Chạy pruning và fine-tuning thủ công
 
