@@ -17,14 +17,12 @@ Mã nguồn chính thức cho bài báo tại LREC-COLING 2024, “Pruning befor
 
 ## Tái thực nghiệm Table 2 trên một số tác vụ
 
-Chúng tôi tái thực hiện bốn điều kiện BERT-base trong Table 2 trên MRPC, STS-B, SST-2, SQuAD 1.1 và QNLI, với tổng cộng 20 kết quả. Mỗi ô ghi điểm trong bài báo → điểm chạy lại, kèm chênh lệch theo điểm phần trăm (chạy lại trừ bài báo). [Table 2 của bài báo](https://aclanthology.org/2024.lrec-main.1162.pdf#page=8)
+Chúng tôi trình bày kết quả tái thực nghiệm Table 2 trên MRPC, SST-2 và QNLI, với bốn điều kiện BERT-base cho mỗi tác vụ. Mỗi ô ghi điểm trong bài báo → điểm chạy lại, kèm chênh lệch theo điểm phần trăm (chạy lại trừ bài báo). [Table 2 của bài báo](https://aclanthology.org/2024.lrec-main.1162.pdf#page=8)
 
 | Tác vụ (thước đo) | BERTBASE | Random | +MC | +CS |
 |:--|--:|--:|--:|--:|
 | MRPC (accuracy) | 86.27 → 81.86 (−4.41) | 77.45 → 76.96 (−0.49) | 81.86 → 81.13 (−0.73) | 86.03 → 82.60 (−3.43) |
-| STS-B (Spearman) | 88.59 → 87.49 (−1.10) | 85.82 → 82.51 (−3.31) | 86.70 → 84.67 (−2.03) | 88.12 → 86.29 (−1.83) |
 | SST-2 (accuracy) | 93.12 → 91.97 (−1.15) | 90.83 → 91.40 (+0.57) | 91.74 → 92.43 (+0.69) | 92.32 → 91.40 (−0.92) |
-| SQuAD 1.1 (F1) | 88.48 → 88.03 (−0.45) | 84.79 → 84.09 (−0.70) | 85.37 → 84.86 (−0.51) | 86.70 → 85.55 (−1.15) |
 | QNLI (accuracy) | 91.41 → 91.32 (−0.09) | 88.49 → 86.78 (−1.71) | 89.75 → 88.76 (−0.99) | 89.22 → 88.63 (−0.59) |
 
 Mức cải thiện so với cắt tỉa ngẫu nhiên:
@@ -32,20 +30,16 @@ Mức cải thiện so với cắt tỉa ngẫu nhiên:
 | Tác vụ | Bài báo +MC | Tái thực nghiệm +MC | Bài báo +CS | Tái thực nghiệm +CS |
 |:--|--:|--:|--:|--:|
 | MRPC | +4.41 | +4.17 | +8.58 | +5.64 |
-| STS-B | +0.88 | +2.16 | +2.30 | +3.79 |
 | SST-2 | +0.91 | +1.03 | +1.49 | 0.00 |
-| SQuAD 1.1 | +0.58 | +0.77 | +1.91 | +1.46 |
 | QNLI | +1.26 | +1.98 | +0.73 | +1.85 |
 
 Trên QNLI, ba cấu hình cắt tỉa đều giữ 59.57% FLOPs. Thứ tự BERTBASE > +MC > +CS > Random khớp với bài báo. `+MC` và `+CS` chỉ chênh 0.13 điểm phần trăm ở seed 3407. Mức cải thiện +0.73 của `+CS` trong bài báo được tính từ hai điểm công bố (89.22 − 88.49). Bảng gốc in +0.77.
 
-**Thiết lập lần chạy:** `bert-base-uncased`, seed 3407, 3.000 mẫu hiệu chuẩn, 200 token lấy mẫu, λ=5, δ=0.001 và mục tiêu 60% FLOPs tương đối. Fine-tuning dùng learning rate 2e-5 trong 3 epoch; batch size 32 cho GLUE và 12 cho SQuAD; độ dài chuỗi tối đa lần lượt là 128 và 384. Lần chạy dùng Tesla T4. BERTBASE là BERT được fine-tune nhưng không cắt tỉa trong lần chạy của chúng tôi; điểm bài báo được đưa vào để đối chiếu. Bài báo không nêu rõ cấu hình fine-tuning riêng cho từng tác vụ ở Table 2, vì vậy đây là tái thực nghiệm một seed với cấu hình cố định. Điều kiện SQuAD +CS đã chạy riêng và hoàn tất đủ 3 epoch; Exact Match đạt 77.04 (không có trong Table 2).
-
-Với SQuAD, hãy dùng các trường `raw_score` hoặc `eval_metrics_raw` trong báo cáo. Trường `metrics_percent` hiện bị nhân thêm 100 lần.
+**Thiết lập lần chạy** gồm `bert-base-uncased`, seed 3407, 3.000 mẫu hiệu chuẩn, 200 token lấy mẫu, λ=5, δ=0.001 và mục tiêu 60% FLOPs tương đối. Fine-tuning dùng learning rate 2e-5, 3 epoch, batch size 32 và độ dài chuỗi tối đa 128. Các lần chạy dùng Tesla T4. BERTBASE là mô hình BERT nguyên vẹn sau fine-tuning. Kết quả được tái thực nghiệm với một seed và cùng cấu hình fine-tuning cho ba tác vụ.
 
 Lần chạy QNLI v8 hoàn tất cả bốn cấu hình, mỗi cấu hình 3 epoch, trong 3 giờ 28 phút 52 giây trên Tesla T4. Bộ nhớ GPU đạt đỉnh 4.605 MiB.
 
-Báo cáo gốc gồm [lần chạy ban đầu trên bốn tác vụ](experiments/table2_selected_tasks/initial_run_report.json), [lần chạy bổ sung SQuAD +CS](experiments/table2_selected_tasks/squad_cs_run_report.json) và [lần chạy QNLI v8](experiments/table2_selected_tasks/qnli_run_report.json).
+Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/table2_selected_tasks/initial_run_report.json) và [lần chạy QNLI v8](experiments/table2_selected_tasks/qnli_run_report.json).
 
 ## Chạy pruning và fine-tuning thủ công
 
