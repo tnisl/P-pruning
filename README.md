@@ -45,7 +45,16 @@ Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/t
 
 ![Accuracy theo thời gian pruning cho Ours, KCM và Mask-Tuning trên MNLI trong lần chạy Kaggle v15.](experiments/figure4/figure4_pruning_time_kaggle_v15.png)
 
-Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (thang log) ở mức khoảng 60% FLOPs. Lần chạy full v15 dùng Tesla T4 và seed `3407`. Ours đạt **82,26% accuracy** sau **2,60 phút pruning** và giữ **59,62% FLOPs**. [Kết quả MNLI v15 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179)
+Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (thang log) ở mức khoảng 60% FLOPs. Lần chạy full v15 dùng Tesla T4, seed `3407`, learning rate `2e-5` và 3 epoch. [Kết quả MNLI v15 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179)
+
+| Phương pháp | Accuracy MNLI matched | FLOPs giữ lại | Pruning (phút) | Fine-tuning (phút) | Tổng (phút) |
+|:--|--:|--:|--:|--:|--:|
+| BERT | 84,53% | 100,00% | 0,00 | 239,56 | 239,56 |
+| Ours | 82,26% | 59,62% | 2,60 | 159,66 | 162,26 |
+| KCM | 59,91% | 60,00% | 0,47 | 239,56* | 240,03 |
+| Mask-Tuning | 80,95% | 60,00% | 0,61 | 239,56* | 240,17 |
+
+\* KCM và Mask-Tuning dùng chung checkpoint BERT. Tổng thời gian của mỗi phương pháp gồm thời gian fine-tuning BERT và thời gian pruning của phương pháp đó. Ours fine-tune nhanh **1,50×** so với BERT.
 
 ## Chạy pruning và fine-tuning thủ công
 
