@@ -1,0 +1,442 @@
+{
+  "run_mode": "full",
+  "source_commit": "2b484bfae45a1cf578f69d4f36d533bb04d3471a",
+  "model": "bert-base-uncased",
+  "tasks_order": [
+    "qnli"
+  ],
+  "methods": [
+    "BERTBASE",
+    "Random",
+    "+MC",
+    "+CS"
+  ],
+  "seed": 3407,
+  "calibration_examples": 3000,
+  "sampled_tokens": 200,
+  "lambda": 5.0,
+  "delta": 0.001,
+  "target_relative_flops": 0.6,
+  "finetuning_data": "all rows in the target training split; 3000 calibration examples apply only to pruning",
+  "hyperparameters": {
+    "glue": {
+      "learning_rate": 2e-05,
+      "epochs": 3,
+      "batch_size": 32,
+      "max_length": 128
+    },
+    "squad": {
+      "learning_rate": 2e-05,
+      "epochs": 3,
+      "batch_size": 12,
+      "max_length": 384
+    }
+  },
+  "smoke_epochs": 1,
+  "table2_reference": {
+    "mrpc": {
+      "metric": "accuracy",
+      "bertbase": 86.27,
+      "random": 77.45,
+      "mc": 81.86,
+      "cs": 86.03
+    },
+    "stsb": {
+      "metric": "spearmanr",
+      "bertbase": 88.59,
+      "random": 85.82,
+      "mc": 86.7,
+      "cs": 88.12
+    },
+    "sst2": {
+      "metric": "accuracy",
+      "bertbase": 93.12,
+      "random": 90.83,
+      "mc": 91.74,
+      "cs": 92.32
+    },
+    "squad": {
+      "metric": "f1",
+      "bertbase": 88.48,
+      "random": 84.79,
+      "mc": 85.37,
+      "cs": 86.7
+    },
+    "qnli": {
+      "metric": "accuracy",
+      "bertbase": 91.41,
+      "random": 88.49,
+      "mc": 89.75,
+      "cs": 89.22
+    }
+  },
+  "results": [
+    {
+      "task": "qnli",
+      "condition": "BERTBASE",
+      "status": "complete",
+      "score_name": "accuracy",
+      "score": 91.32344865458539,
+      "raw_score": 0.9132344865458539,
+      "metrics_percent": {
+        "accuracy": 91.32344865458539
+      },
+      "eval_metrics_raw": {
+        "eval_loss": 0.22997651994228363,
+        "eval_accuracy": 0.9132344865458539,
+        "eval_runtime": 32.2043,
+        "eval_samples_per_second": 169.636,
+        "eval_steps_per_second": 10.62,
+        "epoch": 3.0
+      },
+      "epochs": 3,
+      "learning_rate": 2e-05,
+      "batch_size": 32,
+      "seed": 3407,
+      "elapsed_seconds": 4079.409143686,
+      "paper_reference": 91.41,
+      "relative_flops": 1.0
+    },
+    {
+      "task": "qnli",
+      "condition": "Random",
+      "status": "complete",
+      "score_name": "accuracy",
+      "score": 86.7838184147904,
+      "raw_score": 0.867838184147904,
+      "metrics_percent": {
+        "accuracy": 86.7838184147904
+      },
+      "eval_metrics_raw": {
+        "eval_loss": 0.32506415247917175,
+        "eval_accuracy": 0.867838184147904,
+        "eval_runtime": 21.8601,
+        "eval_samples_per_second": 249.908,
+        "eval_steps_per_second": 15.645,
+        "epoch": 3.0
+      },
+      "epochs": 3,
+      "learning_rate": 2e-05,
+      "batch_size": 32,
+      "seed": 3407,
+      "elapsed_seconds": 2656.861333656,
+      "paper_reference": 88.49,
+      "relative_flops": 0.5956513725136672
+    },
+    {
+      "task": "qnli",
+      "condition": "+MC",
+      "status": "complete",
+      "score_name": "accuracy",
+      "score": 88.76075416437854,
+      "raw_score": 0.8876075416437854,
+      "metrics_percent": {
+        "accuracy": 88.76075416437854
+      },
+      "eval_metrics_raw": {
+        "eval_loss": 0.28939712047576904,
+        "eval_accuracy": 0.8876075416437854,
+        "eval_runtime": 22.0896,
+        "eval_samples_per_second": 247.311,
+        "eval_steps_per_second": 15.482,
+        "epoch": 3.0
+      },
+      "epochs": 3,
+      "learning_rate": 2e-05,
+      "batch_size": 32,
+      "seed": 3407,
+      "elapsed_seconds": 2693.6422518749996,
+      "paper_reference": 89.75,
+      "relative_flops": 0.5956513725136672,
+      "delta_vs_random": 1.9769357495881366
+    },
+    {
+      "task": "qnli",
+      "condition": "+CS",
+      "status": "complete",
+      "score_name": "accuracy",
+      "score": 88.6326194398682,
+      "raw_score": 0.886326194398682,
+      "metrics_percent": {
+        "accuracy": 88.6326194398682
+      },
+      "eval_metrics_raw": {
+        "eval_loss": 0.2900538146495819,
+        "eval_accuracy": 0.886326194398682,
+        "eval_runtime": 22.0853,
+        "eval_samples_per_second": 247.359,
+        "eval_steps_per_second": 15.485,
+        "epoch": 3.0
+      },
+      "epochs": 3,
+      "learning_rate": 2e-05,
+      "batch_size": 32,
+      "seed": 3407,
+      "elapsed_seconds": 2693.4258830570016,
+      "paper_reference": 89.22,
+      "relative_flops": 0.5956513725136672,
+      "delta_vs_random": 1.8488010250777904
+    }
+  ],
+  "deviations": [
+    "Table 2 does not give unique task-specific GLUE learning rates or epoch counts; fixed LR 2e-5 and 3 epochs are used.",
+    "The published BERTBASE row is reported as a reference; the BERTBASE condition here is also fine-tuned from the unpruned model."
+  ],
+  "peak_gpu_memory_mib": 4605,
+  "repo_patches": {
+    "data": "map num_proc 64->4; pinned SQuAD source already has one validation example_id append, verified without modification",
+    "cluster": "squareform condensed distances; delta 0.001; random-centroid + correct member indexing for head centroid",
+    "finetune": "Transformers eval_strategy compatibility; torchvision VideoReader placeholder",
+    "collector": "bounded uniform 200-token activation capture"
+  },
+  "versions": {
+    "python": "3.13.16",
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.6",
+    "datasets": "4.4.0",
+    "evaluate": "0.4.6",
+    "scipy": "1.16.3"
+  },
+  "model_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+  "dataset_revisions": {
+    "nyu-mll/glue": "bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c",
+    "rajpurkar/squad": "7b6d24c440a36b6815f21b70d25016731768db1f"
+  },
+  "gpu": "Tesla T4",
+  "gpu_cuda_version": "13.0",
+  "table_rows": {
+    "qnli": [
+      {
+        "task": "qnli",
+        "condition": "BERTBASE",
+        "status": "complete",
+        "score_name": "accuracy",
+        "score": 91.32344865458539,
+        "raw_score": 0.9132344865458539,
+        "metrics_percent": {
+          "accuracy": 91.32344865458539
+        },
+        "eval_metrics_raw": {
+          "eval_loss": 0.22997651994228363,
+          "eval_accuracy": 0.9132344865458539,
+          "eval_runtime": 32.2043,
+          "eval_samples_per_second": 169.636,
+          "eval_steps_per_second": 10.62,
+          "epoch": 3.0
+        },
+        "epochs": 3,
+        "learning_rate": 2e-05,
+        "batch_size": 32,
+        "seed": 3407,
+        "elapsed_seconds": 4079.409143686,
+        "paper_reference": 91.41,
+        "relative_flops": 1.0
+      },
+      {
+        "task": "qnli",
+        "condition": "Random",
+        "status": "complete",
+        "score_name": "accuracy",
+        "score": 86.7838184147904,
+        "raw_score": 0.867838184147904,
+        "metrics_percent": {
+          "accuracy": 86.7838184147904
+        },
+        "eval_metrics_raw": {
+          "eval_loss": 0.32506415247917175,
+          "eval_accuracy": 0.867838184147904,
+          "eval_runtime": 21.8601,
+          "eval_samples_per_second": 249.908,
+          "eval_steps_per_second": 15.645,
+          "epoch": 3.0
+        },
+        "epochs": 3,
+        "learning_rate": 2e-05,
+        "batch_size": 32,
+        "seed": 3407,
+        "elapsed_seconds": 2656.861333656,
+        "paper_reference": 88.49,
+        "relative_flops": 0.5956513725136672
+      },
+      {
+        "task": "qnli",
+        "condition": "+MC",
+        "status": "complete",
+        "score_name": "accuracy",
+        "score": 88.76075416437854,
+        "raw_score": 0.8876075416437854,
+        "metrics_percent": {
+          "accuracy": 88.76075416437854
+        },
+        "eval_metrics_raw": {
+          "eval_loss": 0.28939712047576904,
+          "eval_accuracy": 0.8876075416437854,
+          "eval_runtime": 22.0896,
+          "eval_samples_per_second": 247.311,
+          "eval_steps_per_second": 15.482,
+          "epoch": 3.0
+        },
+        "epochs": 3,
+        "learning_rate": 2e-05,
+        "batch_size": 32,
+        "seed": 3407,
+        "elapsed_seconds": 2693.6422518749996,
+        "paper_reference": 89.75,
+        "relative_flops": 0.5956513725136672,
+        "delta_vs_random": 1.9769357495881366
+      },
+      {
+        "task": "qnli",
+        "condition": "+CS",
+        "status": "complete",
+        "score_name": "accuracy",
+        "score": 88.6326194398682,
+        "raw_score": 0.886326194398682,
+        "metrics_percent": {
+          "accuracy": 88.6326194398682
+        },
+        "eval_metrics_raw": {
+          "eval_loss": 0.2900538146495819,
+          "eval_accuracy": 0.886326194398682,
+          "eval_runtime": 22.0853,
+          "eval_samples_per_second": 247.359,
+          "eval_steps_per_second": 15.485,
+          "epoch": 3.0
+        },
+        "epochs": 3,
+        "learning_rate": 2e-05,
+        "batch_size": 32,
+        "seed": 3407,
+        "elapsed_seconds": 2693.4258830570016,
+        "paper_reference": 89.22,
+        "relative_flops": 0.5956513725136672,
+        "delta_vs_random": 1.8488010250777904
+      }
+    ]
+  },
+  "summary": {
+    "run_mode": "full",
+    "tasks": [
+      "qnli"
+    ],
+    "methods": [
+      "BERTBASE",
+      "Random",
+      "+MC",
+      "+CS"
+    ],
+    "results": {
+      "qnli": [
+        {
+          "task": "qnli",
+          "condition": "BERTBASE",
+          "status": "complete",
+          "score_name": "accuracy",
+          "score": 91.32344865458539,
+          "raw_score": 0.9132344865458539,
+          "metrics_percent": {
+            "accuracy": 91.32344865458539
+          },
+          "eval_metrics_raw": {
+            "eval_loss": 0.22997651994228363,
+            "eval_accuracy": 0.9132344865458539,
+            "eval_runtime": 32.2043,
+            "eval_samples_per_second": 169.636,
+            "eval_steps_per_second": 10.62,
+            "epoch": 3.0
+          },
+          "epochs": 3,
+          "learning_rate": 2e-05,
+          "batch_size": 32,
+          "seed": 3407,
+          "elapsed_seconds": 4079.409143686,
+          "paper_reference": 91.41,
+          "relative_flops": 1.0
+        },
+        {
+          "task": "qnli",
+          "condition": "Random",
+          "status": "complete",
+          "score_name": "accuracy",
+          "score": 86.7838184147904,
+          "raw_score": 0.867838184147904,
+          "metrics_percent": {
+            "accuracy": 86.7838184147904
+          },
+          "eval_metrics_raw": {
+            "eval_loss": 0.32506415247917175,
+            "eval_accuracy": 0.867838184147904,
+            "eval_runtime": 21.8601,
+            "eval_samples_per_second": 249.908,
+            "eval_steps_per_second": 15.645,
+            "epoch": 3.0
+          },
+          "epochs": 3,
+          "learning_rate": 2e-05,
+          "batch_size": 32,
+          "seed": 3407,
+          "elapsed_seconds": 2656.861333656,
+          "paper_reference": 88.49,
+          "relative_flops": 0.5956513725136672
+        },
+        {
+          "task": "qnli",
+          "condition": "+MC",
+          "status": "complete",
+          "score_name": "accuracy",
+          "score": 88.76075416437854,
+          "raw_score": 0.8876075416437854,
+          "metrics_percent": {
+            "accuracy": 88.76075416437854
+          },
+          "eval_metrics_raw": {
+            "eval_loss": 0.28939712047576904,
+            "eval_accuracy": 0.8876075416437854,
+            "eval_runtime": 22.0896,
+            "eval_samples_per_second": 247.311,
+            "eval_steps_per_second": 15.482,
+            "epoch": 3.0
+          },
+          "epochs": 3,
+          "learning_rate": 2e-05,
+          "batch_size": 32,
+          "seed": 3407,
+          "elapsed_seconds": 2693.6422518749996,
+          "paper_reference": 89.75,
+          "relative_flops": 0.5956513725136672,
+          "delta_vs_random": 1.9769357495881366
+        },
+        {
+          "task": "qnli",
+          "condition": "+CS",
+          "status": "complete",
+          "score_name": "accuracy",
+          "score": 88.6326194398682,
+          "raw_score": 0.886326194398682,
+          "metrics_percent": {
+            "accuracy": 88.6326194398682
+          },
+          "eval_metrics_raw": {
+            "eval_loss": 0.2900538146495819,
+            "eval_accuracy": 0.886326194398682,
+            "eval_runtime": 22.0853,
+            "eval_samples_per_second": 247.359,
+            "eval_steps_per_second": 15.485,
+            "epoch": 3.0
+          },
+          "epochs": 3,
+          "learning_rate": 2e-05,
+          "batch_size": 32,
+          "seed": 3407,
+          "elapsed_seconds": 2693.4258830570016,
+          "paper_reference": 89.22,
+          "relative_flops": 0.5956513725136672,
+          "delta_vs_random": 1.8488010250777904
+        }
+      ]
+    },
+    "total_elapsed_seconds": 12531.699031117,
+    "peak_gpu_memory_mib": 4605
+  },
+  "elapsed_seconds": 12531.699031117
+}
