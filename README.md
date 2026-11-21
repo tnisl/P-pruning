@@ -41,6 +41,12 @@ Lần chạy QNLI v8 hoàn tất cả bốn cấu hình, mỗi cấu hình 3 epo
 
 Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/table2_selected_tasks/initial_run_report.json) và [lần chạy QNLI v8](experiments/table2_selected_tasks/qnli_run_report.json).
 
+## Thực nghiệm Figure 4: tốc độ fine-tuning trên MNLI
+
+![Tốc độ fine-tuning của Ours so với BERT trên MNLI. Kaggle v15 đạt 1,50 lần ở 59,62% FLOPs.](experiments/figure4/figure4_finetuning_speedup_v15.png)
+
+Biểu đồ tái hiện ô bên phải của Figure 4. Lần chạy full v15 dùng Tesla T4, seed `3407`, learning rate `2e-5` và 3 epoch. BERT fine-tune trong **239,56 phút**. Ours mất **159,66 phút** tại **59,62% FLOPs**, tương ứng **1,50×** so với BERT. Đường tham chiếu được đọc từ đồ thị paper trên RTX 3090, với khoảng **1,31×** tại 60% FLOPs. Kaggle v15 đo Ours tại một mức FLOPs. [Figure 4 của paper](https://aclanthology.org/2024.lrec-main.1162.pdf#page=7) · [Kết quả MNLI v15 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179)
+
 ## Chạy pruning và fine-tuning thủ công
 
 ### Bước 1: Tạo mask
