@@ -21,11 +21,13 @@ Chúng tôi trình bày kết quả tái thực nghiệm Table 2 trên MRPC, SST
 
 | Tác vụ (thước đo) | BERTBASE | Random | +MC | +CS |
 |:--|--:|--:|--:|--:|
-| MRPC (accuracy) | 86.27 → 81.86 (−4.41) | 77.45 → 76.96 (−0.49) | 81.86 → 81.13 (−0.73) | 86.03 → 82.60 (−3.43) |
+| MRPC (accuracy) | 86.27 → 85.78 (−0.49) † | 77.45 → 76.96 (−0.49) | 81.86 → 81.13 (−0.73) | 86.03 → 85.78 (−0.25) † |
 | SST-2 (accuracy) | 93.12 → 91.97 (−1.15) | 90.83 → 91.40 (+0.57) | 91.74 → 92.43 (+0.69) | 92.32 → 91.40 (−0.92) |
 | QNLI (accuracy) | 91.41 → 91.32 (−0.09) | 88.49 → 86.78 (−1.71) | 89.75 → 88.76 (−0.99) | 89.22 → 88.63 (−0.59) |
 
-Mức cải thiện so với cắt tỉa ngẫu nhiên:
+† Hai ô `BERTBASE` và `+CS` trên MRPC dùng v31 với LR `5e-5` và 4 epoch. Cả hai đạt 85.78% accuracy, trong đó `+CS` giữ 59.14% FLOPs. [Báo cáo MRPC v31](experiments/table2_selected_tasks/mrpc_v31_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372443516)
+
+Bảng dưới ghi mức cải thiện so với cắt tỉa ngẫu nhiên trong cùng lần chạy. Dòng MRPC dùng lần chạy ban đầu với LR `2e-5` và 3 epoch.
 
 | Tác vụ | Bài báo +MC | Tái thực nghiệm +MC | Bài báo +CS | Tái thực nghiệm +CS |
 |:--|--:|--:|--:|--:|
@@ -35,22 +37,11 @@ Mức cải thiện so với cắt tỉa ngẫu nhiên:
 
 Trên QNLI, ba cấu hình cắt tỉa đều giữ 59.57% FLOPs. Thứ tự BERTBASE > +MC > +CS > Random khớp với bài báo. `+MC` và `+CS` chỉ chênh 0.13 điểm phần trăm ở seed 3407. Mức cải thiện +0.73 của `+CS` trong bài báo được tính từ hai điểm công bố (89.22 − 88.49). Bảng gốc in +0.77.
 
-**Thiết lập lần chạy** gồm `bert-base-uncased`, seed 3407, 3.000 mẫu hiệu chuẩn, 200 token lấy mẫu, λ=5, δ=0.001 và mục tiêu 60% FLOPs tương đối. Fine-tuning dùng learning rate 2e-5, 3 epoch, batch size 32 và độ dài chuỗi tối đa 128. Các lần chạy dùng Tesla T4. BERTBASE là mô hình BERT nguyên vẹn sau fine-tuning. Kết quả được tái thực nghiệm với một seed và cùng cấu hình fine-tuning cho ba tác vụ.
+**Thiết lập chung** gồm `bert-base-uncased`, seed 3407, 3.000 mẫu hiệu chuẩn, 200 token lấy mẫu, λ=5, δ=0.001 và mục tiêu giữ 60% FLOPs. Fine-tuning mặc định dùng LR `2e-5`, 3 epoch và batch size 32 mỗi GPU. Độ dài chuỗi tối đa là 128 cho MRPC và QNLI, và 64 cho SST-2. Các lần chạy dùng Tesla T4. BERTBASE là mô hình BERT nguyên vẹn sau fine-tuning.
 
 Lần chạy QNLI v8 hoàn tất cả bốn cấu hình, mỗi cấu hình 3 epoch, trong 3 giờ 28 phút 52 giây trên Tesla T4. Bộ nhớ GPU đạt đỉnh 4.605 MiB.
 
 Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/table2_selected_tasks/initial_run_report.json) và [lần chạy QNLI v8](experiments/table2_selected_tasks/qnli_run_report.json).
-
-### MRPC v31 với cấu hình fine-tuning điều chỉnh
-
-Lần chạy full v31 dùng learning rate `5e-5`, 4 epoch, batch size 32 mỗi GPU, seed `3407`, warmup 0 và weight decay 0. Ngân sách pruning của `+CS` vẫn là 60% FLOPs mục tiêu.
-
-| Phương pháp | Accuracy v31 | Accuracy bài báo | Chênh lệch (đpt) | F1 v31 | FLOPs giữ lại |
-|:--|--:|--:|--:|--:|--:|
-| BERTBASE | 85,78% | 86,27% | −0,49 | 89,86% | 100,00% |
-| +CS | 85,78% | 86,03% | −0,25 | 90,03% | 59,14% |
-
-Ở seed `3407`, `+CS` đạt cùng accuracy với BERTBASE và giảm 40,86% FLOPs. [Báo cáo gốc MRPC v31](experiments/table2_selected_tasks/mrpc_v31_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372443516)
 
 ## Thực nghiệm Figure 4: thời gian pruning trên MNLI
 
