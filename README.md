@@ -22,10 +22,12 @@ Chúng tôi trình bày kết quả tái thực nghiệm Table 2 trên MRPC, SST
 | Tác vụ (thước đo) | BERTBASE | Random | +MC | +CS |
 |:--|--:|--:|--:|--:|
 | MRPC (accuracy) | 86.27 → 85.78 (−0.49) † | 77.45 → 76.96 (−0.49) | 81.86 → 81.13 (−0.73) | 86.03 → 85.78 (−0.25) † |
-| SST-2 (accuracy) | 93.12 → 91.97 (−1.15) | 90.83 → 91.40 (+0.57) | 91.74 → 92.43 (+0.69) | 92.32 → 91.40 (−0.92) |
+| SST-2 (accuracy) | 93.12 → 93.12 (0.00) ‡ | 90.83 → 91.40 (+0.57) | 91.74 → 92.43 (+0.69) | 92.32 → 91.40 (−0.92) |
 | QNLI (accuracy) | 91.41 → 91.32 (−0.09) | 88.49 → 86.78 (−1.71) | 89.75 → 88.76 (−0.99) | 89.22 → 88.63 (−0.59) |
 
 † Hai ô `BERTBASE` và `+CS` trên MRPC dùng v31 với LR `5e-5` và 4 epoch. Cả hai đạt 85.78% accuracy, trong đó `+CS` giữ 59.14% FLOPs. [Báo cáo MRPC v31](experiments/table2_selected_tasks/mrpc_v31_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372443516)
+
+‡ Ô `BERTBASE` trên SST-2 dùng v33 với LR `5e-5` và 4 epoch. Accuracy khớp với bài báo khi làm tròn đến hai chữ số thập phân. [Báo cáo SST-2 v33](experiments/table2_selected_tasks/sst2_v33_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372450081)
 
 Bảng dưới ghi mức cải thiện so với cắt tỉa ngẫu nhiên trong cùng lần chạy. Dòng MRPC dùng lần chạy ban đầu với LR `2e-5` và 3 epoch.
 
