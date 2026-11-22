@@ -1,0 +1,322 @@
+{
+  "run_mode": "full",
+  "source_commit": "2b484bfae45a1cf578f69d4f36d533bb04d3471a",
+  "model": "bert-base-uncased",
+  "tasks_order": [
+    "mrpc"
+  ],
+  "methods": [
+    "BERTBASE",
+    "+CS"
+  ],
+  "seed": 3407,
+  "calibration_examples": 3000,
+  "sampled_tokens": 200,
+  "lambda": 5.0,
+  "delta": 0.001,
+  "target_relative_flops": 0.6,
+  "finetuning_data": "all rows in the target training split; 3000 calibration examples apply only to pruning",
+  "hyperparameters": {
+    "glue": {
+      "learning_rate": 5e-05,
+      "epochs": 4,
+      "batch_size": 32,
+      "per_device_train_batch_size": 32,
+      "warmup_ratio": 0.0,
+      "weight_decay": 0.0
+    },
+    "squad": {
+      "learning_rate": 5e-05,
+      "epochs": 4,
+      "batch_size": 12,
+      "per_device_train_batch_size": 12,
+      "warmup_ratio": 0.0,
+      "weight_decay": 0.0
+    }
+  },
+  "hyperparameter_overrides": {
+    "learning_rate": 5e-05,
+    "num_train_epochs": 4,
+    "per_device_train_batch_size": null,
+    "warmup_ratio": 0.0,
+    "weight_decay": 0.0
+  },
+  "table2_reference": {
+    "mrpc": {
+      "metric": "accuracy",
+      "bertbase": 86.27,
+      "random": 77.45,
+      "mc": 81.86,
+      "cs": 86.03
+    },
+    "stsb": {
+      "metric": "spearmanr",
+      "bertbase": 88.59,
+      "random": 85.82,
+      "mc": 86.7,
+      "cs": 88.12
+    },
+    "sst2": {
+      "metric": "accuracy",
+      "bertbase": 93.12,
+      "random": 90.83,
+      "mc": 91.74,
+      "cs": 92.32
+    },
+    "squad": {
+      "metric": "f1",
+      "bertbase": 88.48,
+      "random": 84.79,
+      "mc": 85.37,
+      "cs": 86.7
+    },
+    "qnli": {
+      "metric": "accuracy",
+      "bertbase": 91.41,
+      "random": 88.49,
+      "mc": 89.75,
+      "cs": 89.22
+    }
+  },
+  "results": [
+    {
+      "task": "mrpc",
+      "condition": "BERTBASE",
+      "status": "complete",
+      "score_name": "accuracy",
+      "score": 85.7843137254902,
+      "raw_score": 0.8578431372549019,
+      "metrics_percent": {
+        "accuracy": 85.7843137254902,
+        "f1": 89.86013986013987
+      },
+      "eval_metrics_raw": {
+        "eval_loss": 0.46830645203590393,
+        "eval_accuracy": 0.8578431372549019,
+        "eval_f1": 0.8986013986013986,
+        "eval_combined_score": 0.8782222679281503,
+        "eval_runtime": 2.2287,
+        "eval_samples_per_second": 183.062,
+        "eval_steps_per_second": 11.666,
+        "epoch": 4.0
+      },
+      "epochs": 4,
+      "learning_rate": 5e-05,
+      "batch_size": 32,
+      "per_device_train_batch_size": 32,
+      "warmup_ratio": 0.0,
+      "weight_decay": 0.0,
+      "seed": 3407,
+      "elapsed_seconds": 204.37390285400005,
+      "paper_reference": 86.27,
+      "relative_flops": 1.0
+    },
+    {
+      "task": "mrpc",
+      "condition": "+CS",
+      "status": "complete",
+      "score_name": "accuracy",
+      "score": 85.7843137254902,
+      "raw_score": 0.8578431372549019,
+      "metrics_percent": {
+        "accuracy": 85.7843137254902,
+        "f1": 90.03436426116839
+      },
+      "eval_metrics_raw": {
+        "eval_loss": 0.41284552216529846,
+        "eval_accuracy": 0.8578431372549019,
+        "eval_f1": 0.9003436426116839,
+        "eval_combined_score": 0.8790933899332929,
+        "eval_runtime": 1.5496,
+        "eval_samples_per_second": 263.295,
+        "eval_steps_per_second": 16.779,
+        "epoch": 4.0
+      },
+      "epochs": 4,
+      "learning_rate": 5e-05,
+      "batch_size": 32,
+      "per_device_train_batch_size": 32,
+      "warmup_ratio": 0.0,
+      "weight_decay": 0.0,
+      "seed": 3407,
+      "elapsed_seconds": 144.09481877999997,
+      "paper_reference": 86.03,
+      "relative_flops": 0.5914081398464309
+    }
+  ],
+  "deviations": [
+    "Table 2 does not specify exact task-specific learning rates or epoch counts; configurable defaults are LR 2e-5 and 3 epochs (smoke defaults to 1 epoch).",
+    "The published BERTBASE row is reported as a reference; the BERTBASE condition here is also fine-tuned from the unpruned model."
+  ],
+  "peak_gpu_memory_mib": 4617,
+  "repo_patches": {
+    "data": "map num_proc 64->4; pinned SQuAD source already has one validation example_id append, verified without modification",
+    "cluster": "squareform condensed distances; delta 0.001; random-centroid + correct member indexing for head centroid",
+    "finetune": "Transformers eval_strategy compatibility; torchvision VideoReader placeholder",
+    "collector": "bounded uniform 200-token activation capture"
+  },
+  "versions": {
+    "python": "3.13.16",
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.6",
+    "datasets": "4.4.0",
+    "evaluate": "0.4.6",
+    "scipy": "1.16.3"
+  },
+  "model_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+  "dataset_revisions": {
+    "nyu-mll/glue": "bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c",
+    "rajpurkar/squad": "7b6d24c440a36b6815f21b70d25016731768db1f"
+  },
+  "gpu": "Tesla T4",
+  "gpu_cuda_version": "13.0",
+  "table_rows": {
+    "mrpc": [
+      {
+        "task": "mrpc",
+        "condition": "BERTBASE",
+        "status": "complete",
+        "score_name": "accuracy",
+        "score": 85.7843137254902,
+        "raw_score": 0.8578431372549019,
+        "metrics_percent": {
+          "accuracy": 85.7843137254902,
+          "f1": 89.86013986013987
+        },
+        "eval_metrics_raw": {
+          "eval_loss": 0.46830645203590393,
+          "eval_accuracy": 0.8578431372549019,
+          "eval_f1": 0.8986013986013986,
+          "eval_combined_score": 0.8782222679281503,
+          "eval_runtime": 2.2287,
+          "eval_samples_per_second": 183.062,
+          "eval_steps_per_second": 11.666,
+          "epoch": 4.0
+        },
+        "epochs": 4,
+        "learning_rate": 5e-05,
+        "batch_size": 32,
+        "per_device_train_batch_size": 32,
+        "warmup_ratio": 0.0,
+        "weight_decay": 0.0,
+        "seed": 3407,
+        "elapsed_seconds": 204.37390285400005,
+        "paper_reference": 86.27,
+        "relative_flops": 1.0
+      },
+      {
+        "task": "mrpc",
+        "condition": "+CS",
+        "status": "complete",
+        "score_name": "accuracy",
+        "score": 85.7843137254902,
+        "raw_score": 0.8578431372549019,
+        "metrics_percent": {
+          "accuracy": 85.7843137254902,
+          "f1": 90.03436426116839
+        },
+        "eval_metrics_raw": {
+          "eval_loss": 0.41284552216529846,
+          "eval_accuracy": 0.8578431372549019,
+          "eval_f1": 0.9003436426116839,
+          "eval_combined_score": 0.8790933899332929,
+          "eval_runtime": 1.5496,
+          "eval_samples_per_second": 263.295,
+          "eval_steps_per_second": 16.779,
+          "epoch": 4.0
+        },
+        "epochs": 4,
+        "learning_rate": 5e-05,
+        "batch_size": 32,
+        "per_device_train_batch_size": 32,
+        "warmup_ratio": 0.0,
+        "weight_decay": 0.0,
+        "seed": 3407,
+        "elapsed_seconds": 144.09481877999997,
+        "paper_reference": 86.03,
+        "relative_flops": 0.5914081398464309
+      }
+    ]
+  },
+  "summary": {
+    "run_mode": "full",
+    "tasks": [
+      "mrpc"
+    ],
+    "methods": [
+      "BERTBASE",
+      "+CS"
+    ],
+    "results": {
+      "mrpc": [
+        {
+          "task": "mrpc",
+          "condition": "BERTBASE",
+          "status": "complete",
+          "score_name": "accuracy",
+          "score": 85.7843137254902,
+          "raw_score": 0.8578431372549019,
+          "metrics_percent": {
+            "accuracy": 85.7843137254902,
+            "f1": 89.86013986013987
+          },
+          "eval_metrics_raw": {
+            "eval_loss": 0.46830645203590393,
+            "eval_accuracy": 0.8578431372549019,
+            "eval_f1": 0.8986013986013986,
+            "eval_combined_score": 0.8782222679281503,
+            "eval_runtime": 2.2287,
+            "eval_samples_per_second": 183.062,
+            "eval_steps_per_second": 11.666,
+            "epoch": 4.0
+          },
+          "epochs": 4,
+          "learning_rate": 5e-05,
+          "batch_size": 32,
+          "per_device_train_batch_size": 32,
+          "warmup_ratio": 0.0,
+          "weight_decay": 0.0,
+          "seed": 3407,
+          "elapsed_seconds": 204.37390285400005,
+          "paper_reference": 86.27,
+          "relative_flops": 1.0
+        },
+        {
+          "task": "mrpc",
+          "condition": "+CS",
+          "status": "complete",
+          "score_name": "accuracy",
+          "score": 85.7843137254902,
+          "raw_score": 0.8578431372549019,
+          "metrics_percent": {
+            "accuracy": 85.7843137254902,
+            "f1": 90.03436426116839
+          },
+          "eval_metrics_raw": {
+            "eval_loss": 0.41284552216529846,
+            "eval_accuracy": 0.8578431372549019,
+            "eval_f1": 0.9003436426116839,
+            "eval_combined_score": 0.8790933899332929,
+            "eval_runtime": 1.5496,
+            "eval_samples_per_second": 263.295,
+            "eval_steps_per_second": 16.779,
+            "epoch": 4.0
+          },
+          "epochs": 4,
+          "learning_rate": 5e-05,
+          "batch_size": 32,
+          "per_device_train_batch_size": 32,
+          "warmup_ratio": 0.0,
+          "weight_decay": 0.0,
+          "seed": 3407,
+          "elapsed_seconds": 144.09481877999997,
+          "paper_reference": 86.03,
+          "relative_flops": 0.5914081398464309
+        }
+      ]
+    },
+    "total_elapsed_seconds": 581.775918867,
+    "peak_gpu_memory_mib": 4617
+  },
+  "elapsed_seconds": 581.775918867
+}

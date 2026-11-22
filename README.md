@@ -41,6 +41,17 @@ Lần chạy QNLI v8 hoàn tất cả bốn cấu hình, mỗi cấu hình 3 epo
 
 Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/table2_selected_tasks/initial_run_report.json) và [lần chạy QNLI v8](experiments/table2_selected_tasks/qnli_run_report.json).
 
+### MRPC v31 với cấu hình fine-tuning điều chỉnh
+
+Lần chạy full v31 dùng learning rate `5e-5`, 4 epoch, batch size 32 mỗi GPU, seed `3407`, warmup 0 và weight decay 0. Ngân sách pruning của `+CS` vẫn là 60% FLOPs mục tiêu.
+
+| Phương pháp | Accuracy v31 | Accuracy bài báo | Chênh lệch (đpt) | F1 v31 | FLOPs giữ lại |
+|:--|--:|--:|--:|--:|--:|
+| BERTBASE | 85,78% | 86,27% | −0,49 | 89,86% | 100,00% |
+| +CS | 85,78% | 86,03% | −0,25 | 90,03% | 59,14% |
+
+Ở seed `3407`, `+CS` đạt cùng accuracy với BERTBASE và giảm 40,86% FLOPs. [Báo cáo gốc MRPC v31](experiments/table2_selected_tasks/mrpc_v31_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372443516)
+
 ## Thực nghiệm Figure 4: thời gian pruning trên MNLI
 
 ![Accuracy theo thời gian pruning cho Ours, KCM và Mask-Tuning trên MNLI trong lần chạy Kaggle v15.](experiments/figure4/figure4_pruning_time_kaggle_v15.png)
