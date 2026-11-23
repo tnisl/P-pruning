@@ -64,7 +64,9 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 
 ### Thời gian fine-tuning theo FLOPs giữ lại
 
-Bảng gộp kết quả BERT và Ours từ các lần chạy full MNLI trên Tesla T4. Hệ số tăng tốc bằng thời gian fine-tuning BERT v15 chia cho thời gian fine-tuning Ours tại từng mức FLOPs. [Kaggle v15](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179) · [Kaggle v16](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621297) · [Kaggle v17](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621541)
+![Hệ số tăng tốc fine-tuning trên MNLI, với BERT làm mốc 1× và tám điểm Ours từ Kaggle v15–v17.](experiments/figure4/figure4_finetuning_time_kaggle_v15_v17.png)
+
+Biểu đồ dùng các mức FLOPs mục tiêu trên trục ngang. Hệ số tăng tốc bằng thời gian fine-tuning BERT v15 chia cho thời gian fine-tuning Ours tại từng mức. Cả ba phiên đều chạy full MNLI trên Tesla T4. Bảng ghi thêm FLOPs thực tế và accuracy của từng điểm. [Kaggle v15](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179) · [Kaggle v16](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621297) · [Kaggle v17](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621541)
 
 | Phương pháp | FLOPs mục tiêu | FLOPs giữ lại | Accuracy MNLI matched | Fine-tuning (phút) | Tăng tốc so với BERT | Phiên |
 |:--|--:|--:|--:|--:|--:|:--|
