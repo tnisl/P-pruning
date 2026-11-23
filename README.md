@@ -49,6 +49,8 @@ Báo cáo gốc gồm [lần chạy ban đầu có MRPC và SST-2](experiments/t
 
 ## Thực nghiệm Figure 4: thời gian pruning trên MNLI
 
+### Thời gian pruning ở mức 60% FLOPs
+
 ![Accuracy theo thời gian pruning cho Ours, KCM và Mask-Tuning trên MNLI trong lần chạy Kaggle v15.](experiments/figure4/figure4_pruning_time_kaggle_v15.png)
 
 Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (thang log) ở mức khoảng 60% FLOPs. Lần chạy full v15 dùng Tesla T4, seed `3407`, learning rate `2e-5` và 3 epoch. [Kết quả MNLI v15 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179)
@@ -61,6 +63,23 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 | Mask-Tuning | 80,95% | 60,00% | 0,61 | 239,56* | 240,17 |
 
 \* KCM và Mask-Tuning dùng chung checkpoint BERT. Tổng thời gian của mỗi phương pháp gồm thời gian fine-tuning BERT và thời gian pruning của phương pháp đó.
+
+### Thời gian pruning ở mức 20% FLOPs
+
+![Accuracy MNLI matched theo thời gian pruning ở mức 20% FLOPs cho Ours, KCM và Mask-Tuning trong lần chạy Kaggle v6.](experiments/figure4/figure4_pruning_time_kaggle_v6_20pct.png)
+
+Lần chạy full v6 dùng `bert-base-uncased` trên Tesla T4, seed `3407`, learning rate `2e-5`, batch size 32 và 3 epoch. Biểu đồ đặt accuracy MNLI matched theo thời gian pruning trên trục log. [Kết quả MNLI v6 trên Kaggle](https://www.kaggle.com/code/lctrnnguynkhi/tnkl-p-pruning-figure4-0-2-flops?scriptVersionId=372998334)
+
+| Phương pháp | Accuracy MNLI matched | FLOPs giữ lại | Pruning (phút) | Fine-tuning (phút) | Tổng (phút) |
+|:--|--:|--:|--:|--:|--:|
+| BERT | 84,55% | 100,000% | 0,00 | 250,45 | 250,45 |
+| Ours | 73,76% | 19,793% | 2,82 | 73,65 | 76,47 |
+| KCM | 31,82% | 19,999% | 0,52 | 250,45* | 250,97 |
+| Mask-Tuning | 31,82% | 19,998% | 0,58 | 250,45* | 251,03 |
+
+\* Hai phương pháp dùng chung checkpoint BERT dense. Tổng của mỗi dòng tính cả thời gian fine-tuning BERT và thời gian pruning của phương pháp đó.
+
+KCM ở mức 20% dùng bản mở rộng xếp hạng và cắt thêm attention head để đạt ngân sách FLOPs. Phiên chạy hoàn tất với cảnh báo tràn số từ SciPy LSMR trong bước Mask-Tuning. Ảnh hưởng của cảnh báo lên accuracy chưa được xác định.
 
 ### Thời gian fine-tuning theo FLOPs giữ lại
 
