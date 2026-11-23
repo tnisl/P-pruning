@@ -62,20 +62,21 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 
 \* KCM và Mask-Tuning dùng chung checkpoint BERT. Tổng thời gian của mỗi phương pháp gồm thời gian fine-tuning BERT và thời gian pruning của phương pháp đó.
 
-### Tốc độ fine-tuning theo FLOPs giữ lại
+### Thời gian fine-tuning theo FLOPs giữ lại
 
-Bảng gộp các điểm Ours của v15, v16 và v17. Tất cả dùng cùng cấu hình full MNLI trên Tesla T4. Hệ số tăng tốc lấy thời gian fine-tuning BERT v15 (**239,56 phút**) chia cho thời gian fine-tuning Ours tại từng mức. [Kaggle v15](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179) · [Kaggle v16](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621297) · [Kaggle v17](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621541)
+Bảng gộp kết quả BERT và Ours từ các lần chạy full MNLI trên Tesla T4. Hệ số tăng tốc bằng thời gian fine-tuning BERT v15 chia cho thời gian fine-tuning Ours tại từng mức FLOPs. [Kaggle v15](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179) · [Kaggle v16](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621297) · [Kaggle v17](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621541)
 
-| FLOPs mục tiêu | FLOPs giữ lại | Accuracy MNLI matched | Fine-tuning (phút) | Tăng tốc so với BERT | Phiên |
-|--:|--:|--:|--:|--:|:--|
-| 90% | 89,64% | 83,72% | 208,57 | 1,15× | v16 |
-| 80% | 79,62% | 83,31% | 188,32 | 1,27× | v16 |
-| 70% | 69,63% | 82,89% | 170,78 | 1,40× | v16 |
-| 60% | 59,62% | 82,26% | 159,66 | 1,50× | v15 |
-| 50% | 49,71% | 81,42% | 140,26 | 1,71× | v17 |
-| 40% | 39,78% | 80,32% | 118,18 | 2,03× | v17 |
-| 30% | 29,36% | 77,86% | 94,15 | 2,54× | v17 |
-| 20% | 19,79% | 73,71% | 73,52 | 3,26× | v17 |
+| Phương pháp | FLOPs mục tiêu | FLOPs giữ lại | Accuracy MNLI matched | Fine-tuning (phút) | Tăng tốc so với BERT | Phiên |
+|:--|--:|--:|--:|--:|--:|:--|
+| BERT | 100% | 100,00% | 84,53% | 239,56 | 1,00× | v15 |
+| Ours | 90% | 89,64% | 83,72% | 208,57 | 1,15× | v16 |
+| Ours | 80% | 79,62% | 83,31% | 188,32 | 1,27× | v16 |
+| Ours | 70% | 69,63% | 82,89% | 170,78 | 1,40× | v16 |
+| Ours | 60% | 59,62% | 82,26% | 159,66 | 1,50× | v15 |
+| Ours | 50% | 49,71% | 81,42% | 140,26 | 1,71× | v17 |
+| Ours | 40% | 39,78% | 80,32% | 118,18 | 2,03× | v17 |
+| Ours | 30% | 29,36% | 77,86% | 94,15 | 2,54× | v17 |
+| Ours | 20% | 19,79% | 73,71% | 73,52 | 3,26× | v17 |
 
 ## Chạy pruning và fine-tuning thủ công
 
