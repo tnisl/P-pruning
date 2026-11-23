@@ -23,13 +23,15 @@ Chúng tôi trình bày kết quả tái thực nghiệm Table 2 trên MRPC, SST
 |:--|--:|--:|--:|--:|
 | MRPC (accuracy) | 86.27 → 85.78 (−0.49) † | 77.45 → 76.96 (−0.49) | 81.86 → 81.13 (−0.73) | 86.03 → 85.78 (−0.25) † |
 | SST-2 (accuracy) | 93.12 → 93.12 (0.00) ‡ | 90.83 → 91.40 (+0.57) | 91.74 → 92.43 (+0.69) | 92.32 → 91.40 (−0.92) |
-| QNLI (accuracy) | 91.41 → 91.32 (−0.09) | 88.49 → 86.78 (−1.71) | 89.75 → 88.76 (−0.99) | 89.22 → 88.63 (−0.59) |
+| QNLI (accuracy) | 91.41 → 91.32 (−0.09) | 88.49 → 85.56 (−2.93) § | 89.75 → 88.76 (−0.99) | 89.22 → 88.63 (−0.59) |
 
 † Hai ô `BERTBASE` và `+CS` trên MRPC dùng v31 với LR `5e-5` và 4 epoch. Cả hai đạt 85.78% accuracy, trong đó `+CS` giữ 59.14% FLOPs. [Báo cáo MRPC v31](experiments/table2_selected_tasks/mrpc_v31_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372443516)
 
 ‡ Ô `BERTBASE` trên SST-2 dùng v33 với LR `5e-5` và 4 epoch. Accuracy khớp với bài báo khi làm tròn đến hai chữ số thập phân. [Báo cáo SST-2 v33](experiments/table2_selected_tasks/sst2_v33_run_report.json) · [Lần chạy trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372450081)
 
-Bảng dưới ghi mức cải thiện so với cắt tỉa ngẫu nhiên trong cùng lần chạy. Dòng MRPC dùng lần chạy ban đầu với LR `2e-5` và 3 epoch.
+§ Ô `Random` trên QNLI dùng kết quả mới nhất v38 với LR `8e-5` và 4 epoch, giữ 59.57% FLOPs. Lần v37 với LR `5e-5` và 4 epoch đạt 87.19% accuracy. [Báo cáo QNLI v38](experiments/table2_selected_tasks/qnli_v38_run_report.json) · [Lần chạy v38 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372527132) · [Lần chạy v37 trên Kaggle](https://www.kaggle.com/code/cymeu4l0t/p-pruning-table-2-squad-cs?scriptVersionId=372506462)
+
+Bảng dưới ghi mức cải thiện so với cắt tỉa ngẫu nhiên trong cùng lần chạy. MRPC dùng lần chạy ban đầu và QNLI dùng v8, đều với LR `2e-5` và 3 epoch.
 
 | Tác vụ | Bài báo +MC | Tái thực nghiệm +MC | Bài báo +CS | Tái thực nghiệm +CS |
 |:--|--:|--:|--:|--:|
@@ -37,7 +39,7 @@ Bảng dưới ghi mức cải thiện so với cắt tỉa ngẫu nhiên trong 
 | SST-2 | +0.91 | +1.03 | +1.49 | 0.00 |
 | QNLI | +1.26 | +1.98 | +0.73 | +1.85 |
 
-Trên QNLI, ba cấu hình cắt tỉa đều giữ 59.57% FLOPs. Thứ tự BERTBASE > +MC > +CS > Random khớp với bài báo. `+MC` và `+CS` chỉ chênh 0.13 điểm phần trăm ở seed 3407. Mức cải thiện +0.73 của `+CS` trong bài báo được tính từ hai điểm công bố (89.22 − 88.49). Bảng gốc in +0.77.
+Trong QNLI v8, ba cấu hình cắt tỉa đều giữ 59.57% FLOPs. Thứ tự BERTBASE > +MC > +CS > Random khớp với bài báo. `+MC` và `+CS` chỉ chênh 0.13 điểm phần trăm ở seed 3407. Mức cải thiện +0.73 của `+CS` trong bài báo được tính từ hai điểm công bố (89.22 − 88.49). Bảng gốc in +0.77.
 
 **Thiết lập chung** gồm `bert-base-uncased`, seed 3407, 3.000 mẫu hiệu chuẩn, 200 token lấy mẫu, λ=5, δ=0.001 và mục tiêu giữ 60% FLOPs. Fine-tuning mặc định dùng LR `2e-5`, 3 epoch và batch size 32 mỗi GPU. Độ dài chuỗi tối đa là 128 cho MRPC và QNLI, và 64 cho SST-2. Các lần chạy dùng Tesla T4. BERTBASE là mô hình BERT nguyên vẹn sau fine-tuning.
 
@@ -58,7 +60,22 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 | KCM | 59,91% | 60,00% | 0,47 | 239,56* | 240,03 |
 | Mask-Tuning | 80,95% | 60,00% | 0,61 | 239,56* | 240,17 |
 
-\* KCM và Mask-Tuning dùng chung checkpoint BERT. Tổng thời gian của mỗi phương pháp gồm thời gian fine-tuning BERT và thời gian pruning của phương pháp đó. Ours fine-tune nhanh **1,50×** so với BERT.
+\* KCM và Mask-Tuning dùng chung checkpoint BERT. Tổng thời gian của mỗi phương pháp gồm thời gian fine-tuning BERT và thời gian pruning của phương pháp đó.
+
+### Tốc độ fine-tuning theo FLOPs giữ lại
+
+Bảng gộp các điểm Ours của v15, v16 và v17. Tất cả dùng cùng cấu hình full MNLI trên Tesla T4. Hệ số tăng tốc lấy thời gian fine-tuning BERT v15 (**239,56 phút**) chia cho thời gian fine-tuning Ours tại từng mức. [Kaggle v15](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372172179) · [Kaggle v16](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621297) · [Kaggle v17](https://www.kaggle.com/code/cymeu4l0t/p-pruning-figure-4-mnli?scriptVersionId=372621541)
+
+| FLOPs mục tiêu | FLOPs giữ lại | Accuracy MNLI matched | Fine-tuning (phút) | Tăng tốc so với BERT | Phiên |
+|--:|--:|--:|--:|--:|:--|
+| 90% | 89,64% | 83,72% | 208,57 | 1,15× | v16 |
+| 80% | 79,62% | 83,31% | 188,32 | 1,27× | v16 |
+| 70% | 69,63% | 82,89% | 170,78 | 1,40× | v16 |
+| 60% | 59,62% | 82,26% | 159,66 | 1,50× | v15 |
+| 50% | 49,71% | 81,42% | 140,26 | 1,71× | v17 |
+| 40% | 39,78% | 80,32% | 118,18 | 2,03× | v17 |
+| 30% | 29,36% | 77,86% | 94,15 | 2,54× | v17 |
+| 20% | 19,79% | 73,71% | 73,52 | 3,26× | v17 |
 
 ## Chạy pruning và fine-tuning thủ công
 
