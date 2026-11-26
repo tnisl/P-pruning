@@ -66,9 +66,9 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 
 ### Thời gian pruning ở mức 20% FLOPs
 
-![Accuracy MNLI matched theo thời gian pruning ở mức 20% FLOPs cho Ours, KCM và Mask-Tuning trong lần chạy Kaggle v6.](experiments/figure4/figure4_pruning_time_kaggle_v6_20pct.png)
+![Accuracy MNLI matched ở mức 20% FLOPs theo thời gian pruning của Ours và thời gian toàn bước post-pruning của KCM và Mask-Tuning trong lần chạy Kaggle v6.](experiments/figure4/figure4_pruning_time_kaggle_v6_20pct.png)
 
-Lần chạy full v6 dùng `bert-base-uncased` trên Tesla T4, seed `3407`, learning rate `2e-5`, batch size 32 và 3 epoch. Biểu đồ đặt accuracy MNLI matched theo thời gian pruning trên trục log. [Kết quả MNLI v6 trên Kaggle](https://www.kaggle.com/code/lctrnnguynkhi/tnkl-p-pruning-figure4-0-2-flops?scriptVersionId=372998334)
+Lần chạy full v6 dùng `bert-base-uncased` trên Tesla T4, seed `3407`, learning rate `2e-5`, batch size 32 và 3 epoch. Trên trục thời gian log, Ours dùng thời gian pruning (169,33 giây), còn KCM và Mask-Tuning dùng thời gian toàn bước post-pruning (97,91 và 99,07 giây). Hai điểm post-pruning gần trùng nhau vì có cùng accuracy và chỉ chênh 1,16 giây. [Kết quả MNLI v6 trên Kaggle](https://www.kaggle.com/code/lctrnnguynkhi/tnkl-p-pruning-figure4-0-2-flops?scriptVersionId=372998334)
 
 | Phương pháp | Accuracy MNLI matched | FLOPs giữ lại | Pruning (phút) | Toàn bước post-pruning (giây) | Fine-tuning (phút) | Fine-tuning + pruning (phút) |
 |:--|--:|--:|--:|--:|--:|--:|
@@ -77,7 +77,7 @@ Lần chạy full v6 dùng `bert-base-uncased` trên Tesla T4, seed `3407`, lear
 | KCM | 31,82% | 19,999% | 0,52 | 97,91 | 250,45* | 250,97 |
 | Mask-Tuning | 31,82% | 19,998% | 0,58 | 99,07 | 250,45* | 251,03 |
 
-Toàn bước post-pruning gồm nạp checkpoint, chuẩn bị dữ liệu, pruning, đánh giá và lưu mask. Biểu đồ và cột cuối dùng thời gian ở cột Pruning.
+Toàn bước post-pruning gồm nạp checkpoint, chuẩn bị dữ liệu, pruning, đánh giá và lưu mask. Cột cuối cộng thời gian fine-tuning và thời gian ở cột Pruning.
 
 \* KCM và Mask-Tuning dùng chung checkpoint BERT dense đã fine-tune. Mỗi dòng ghi cùng thời gian fine-tuning của checkpoint đó.
 
