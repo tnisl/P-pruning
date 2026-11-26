@@ -70,14 +70,16 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 
 Lần chạy full v6 dùng `bert-base-uncased` trên Tesla T4, seed `3407`, learning rate `2e-5`, batch size 32 và 3 epoch. Biểu đồ đặt accuracy MNLI matched theo thời gian pruning trên trục log. [Kết quả MNLI v6 trên Kaggle](https://www.kaggle.com/code/lctrnnguynkhi/tnkl-p-pruning-figure4-0-2-flops?scriptVersionId=372998334)
 
-| Phương pháp | Accuracy MNLI matched | FLOPs giữ lại | Pruning (phút) | Fine-tuning (phút) | Tổng (phút) |
-|:--|--:|--:|--:|--:|--:|
-| BERT | 84,55% | 100,000% | 0,00 | 250,45 | 250,45 |
-| Ours | 73,76% | 19,793% | 2,82 | 73,65 | 76,47 |
-| KCM | 31,82% | 19,999% | 0,52 | 250,45* | 250,97 |
-| Mask-Tuning | 31,82% | 19,998% | 0,58 | 250,45* | 251,03 |
+| Phương pháp | Accuracy MNLI matched | FLOPs giữ lại | Pruning (phút) | Toàn bước post-pruning (giây) | Fine-tuning (phút) | Fine-tuning + pruning (phút) |
+|:--|--:|--:|--:|--:|--:|--:|
+| BERT | 84,55% | 100,000% | 0,00 | — | 250,45 | 250,45 |
+| Ours | 73,76% | 19,793% | 2,82 | — | 73,65 | 76,47 |
+| KCM | 31,82% | 19,999% | 0,52 | 97,91 | 250,45* | 250,97 |
+| Mask-Tuning | 31,82% | 19,998% | 0,58 | 99,07 | 250,45* | 251,03 |
 
-\* Hai phương pháp dùng chung checkpoint BERT dense. Tổng của mỗi dòng tính cả thời gian fine-tuning BERT và thời gian pruning của phương pháp đó.
+Toàn bước post-pruning gồm nạp checkpoint, chuẩn bị dữ liệu, pruning, đánh giá và lưu mask. Biểu đồ và cột cuối dùng thời gian ở cột Pruning.
+
+\* KCM và Mask-Tuning dùng chung checkpoint BERT dense đã fine-tune. Mỗi dòng ghi cùng thời gian fine-tuning của checkpoint đó.
 
 KCM ở mức 20% dùng bản mở rộng xếp hạng và cắt thêm attention head để đạt ngân sách FLOPs. Phiên chạy hoàn tất với cảnh báo tràn số từ SciPy LSMR trong bước Mask-Tuning. Ảnh hưởng của cảnh báo lên accuracy chưa được xác định.
 
