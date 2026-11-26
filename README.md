@@ -66,7 +66,7 @@ Biểu đồ thể hiện accuracy trên MNLI matched theo thời gian pruning (
 
 ### Thời gian pruning ở mức 20% FLOPs
 
-![Accuracy MNLI matched ở mức 20% FLOPs theo thời gian pruning của Ours và thời gian toàn bước post-pruning của KCM và Mask-Tuning trong lần chạy Kaggle v6.](experiments/figure4/figure4_pruning_time_kaggle_v6_20pct.png)
+![Accuracy MNLI matched ở mức 20% FLOPs theo thời gian pruning của Ours và thời gian toàn bước post-pruning của KCM và Mask-Tuning trong lần chạy Kaggle v6.](experiments/figure4/figure4_post_pruning_time_kaggle_v6_20pct.png)
 
 Lần chạy full v6 dùng `bert-base-uncased` trên Tesla T4, seed `3407`, learning rate `2e-5`, batch size 32 và 3 epoch. Trên trục thời gian log, Ours dùng thời gian pruning (169,33 giây), còn KCM và Mask-Tuning dùng thời gian toàn bước post-pruning (97,91 và 99,07 giây). Hai điểm post-pruning gần trùng nhau vì có cùng accuracy và chỉ chênh 1,16 giây. [Kết quả MNLI v6 trên Kaggle](https://www.kaggle.com/code/lctrnnguynkhi/tnkl-p-pruning-figure4-0-2-flops?scriptVersionId=372998334)
 
